@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project — Kelly Yin</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .project-page { min-height: 100vh; background: var(--paper); }
+    .project-nav { position: fixed; z-index: 20; inset: 0 0 auto; padding: 22px 30px; display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; mix-blend-mode: difference; color: white; }
+    .project-nav a:hover { opacity: .55; }
+    .project-hero { min-height: 94vh; display: grid; grid-template-columns: .74fr 1.26fr; }
+    .project-copy { padding: 130px 5vw 60px 30px; display: flex; flex-direction: column; justify-content: space-between; }
+    .project-copy .number { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); }
+    .project-copy h1 { margin: 40px 0 25px; font-family: var(--serif); font-size: clamp(65px, 9vw, 140px); font-weight: 400; line-height: .75; letter-spacing: -.07em; }
+    .project-copy h1 em { font-weight: 400; color: var(--red); }
+    .project-copy .summary { max-width: 500px; font-family: var(--serif); font-size: 18px; line-height: 1.48; }
+    .project-facts { margin: 60px 0 0; border-top: 1px solid var(--line); }
+    .project-facts div { display: grid; grid-template-columns: 110px 1fr; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .project-facts dt { font-size: 8px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+    .project-facts dd { margin: 0; font-family: var(--serif); font-size: 14px; }
+    .project-image { height: 94vh; background: #07070a; overflow: hidden; display: grid; place-items: center; padding: clamp(18px, 3vw, 52px); }
+    .project-image img { object-fit: contain; object-position: center; }
+    .project-detail { padding: 120px 30px; display: grid; grid-template-columns: .6fr 1.4fr; gap: 8vw; }
+    .project-detail h2 { margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: .15em; }
+    .project-detail p { margin: 0; max-width: 820px; font-family: var(--serif); font-size: clamp(28px, 4.4vw, 62px); line-height: 1.02; letter-spacing: -.025em; }
+    .project-detail p em { color: var(--blue); }
+    .next-project { margin-top: 100px; padding: 22px 0 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+    @media(max-width:820px){
+      .project-nav { padding: 18px; }
+      .project-hero { grid-template-columns: 1fr; }
+      .project-copy { min-height: 690px; padding: 100px 18px 45px; }
+      .project-image { height: 72vh; padding: 18px; }
+      .project-detail { grid-template-columns: 1fr; padding: 80px 18px; gap: 40px; }
+    }
+  </style>
+</head>
+<body class="project-page">
+  <div class="grain" aria-hidden="true"></div>
+  <nav class="project-nav"><a href="index.html#work">← All work</a><span>Kelly Yin · Illustration</span></nav>
+  <main>
+    <section class="project-hero">
+      <div class="project-copy">
+        <div>
+          <span class="number" id="project-number">Selected Work 01 / 11</span>
+          <h1 id="project-title">The Eyes <em>Have It</em></h1>
+          <p class="summary" id="project-summary">A surreal image built around an all-seeing eye, layered hands and a theatrical checkerboard space.</p>
+        </div>
+        <dl class="project-facts">
+          <div><dt>Collection</dt><dd id="project-collection">Selected Work</dd></div>
+          <div><dt>Group</dt><dd id="project-group">Finished illustration</dd></div>
+          <div><dt>Entry</dt><dd id="project-entry">01 / 11</dd></div>
+          <div><dt>Artist</dt><dd>Kelly Yin</dd></div>
+        </dl>
+      </div>
+      <figure class="project-image"><img id="project-image" src="assets/portfolio/work-01.webp" alt="Surreal eye formed by many reaching hands inside a glowing arch"></figure>
+    </section>
+    <section class="project-detail">
+      <h2>Behind the image</h2>
+      <div>
+        <p id="project-description">A dark, dreamlike composition where the gaze becomes both subject and architecture. Repeated hands create a sense of <em>movement, tension and collective attention</em>.</p>
+        <a class="next-project" id="next-project" href="project.html?id=sugar-rush"><span>Next project</span><span id="next-name">Sugar Rush →</span></a>
+      </div>
+    </section>
+  </main>
+  <script src="data.js"></script>
+  <script>
+    const projects = window.KELLY_PROJECTS || [];
+    const params = new URLSearchParams(location.search);
+    const requestedIndex = projects.findIndex(p => p.id === params.get('id'));
+    const index = requestedIndex >= 0 ? requestedIndex : 0;
+    const project = projects[index];
+    const next = projects[(index + 1) % projects.length];
+    const collection = project.category === 'selected' ? 'Selected Work' : 'Sketchbook';
+    const group = project.category === 'selected' ? 'Finished illustration' : 'Works on paper';
+    const groupProjects = projects.filter(p => p.category === project.category);
+    const groupIndex = groupProjects.findIndex(p => p.id === project.id);
+    const titleWords = project.title.split(' ');
+    const titleHtml = titleWords.length > 1
+      ? `${titleWords.slice(0, -1).join(' ')} <em>${titleWords.at(-1)}</em>`
+      : `<em>${project.title}</em>`;
+    document.title = project.title + ' — Kelly Yin';
+    document.querySelector('#project-number').textContent = `${collection} ${String(groupIndex + 1).padStart(2,'0')} / ${String(groupProjects.length).padStart(2,'0')}`;
+    document.querySelector('#project-title').innerHTML = titleHtml;
+    document.querySelector('#project-summary').textContent = project.summary;
+    document.querySelector('#project-collection').textContent = collection;
+    document.querySelector('#project-group').textContent = group;
+    document.querySelector('#project-entry').textContent = `${String(groupIndex + 1).padStart(2,'0')} / ${String(groupProjects.length).padStart(2,'0')}`;
+    document.querySelector('#project-image').src = project.image;
+    document.querySelector('#project-image').alt = project.alt;
+    document.querySelector('#project-description').innerHTML = project.description;
+    document.querySelector('#next-project').href = `project.html?id=${next.id}`;
+    document.querySelector('#next-name').textContent = next.title + ' →';
+  </script>
+</body>
+</html>
