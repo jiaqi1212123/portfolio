@@ -2,13 +2,23 @@ const projects = window.KELLY_PROJECTS || [];
 const orbitTrack = document.querySelector('#orbit-track');
 const projectGrid = document.querySelector('#project-grid');
 
-const selectedWorks = projects.filter((project) => project.category === 'selected');
-const homepageWorks = selectedWorks
-  .filter((project) => !['gate-of-fire', 'floating-temple'].includes(project.id))
-  .slice(0, 8);
+const homepageIds = [
+  'human-organ-auction',
+  'untitled-room',
+  'eyes-have-it',
+  'sugar-rush',
+  'city-lines',
+  'drop-of-light',
+  'star-cloud',
+  'submerged-garden',
+  'snow-dragon'
+];
+const homepageWorks = homepageIds
+  .map((id) => projects.find((project) => project.id === id))
+  .filter(Boolean);
 
 orbitTrack.innerHTML = homepageWorks.map((project, index) => `
-  <a class="orbit-item p${index + 1}" href="project.html?id=${project.id}" aria-label="View ${project.title}">
+  <a class="orbit-item ${project.cardClass} p${index + 1}" href="project.html?id=${project.id}" aria-label="View ${project.title}">
     <span class="orbit-card ${project.cardClass}">
       <img src="${project.image}" alt="${project.alt}" decoding="async" ${index < 3 ? 'fetchpriority="high"' : ''}>
     </span>
@@ -16,12 +26,19 @@ orbitTrack.innerHTML = homepageWorks.map((project, index) => `
 `).join('');
 
 const categoryCount = { selected: 0, sketchbook: 0 };
+const genreLabels = {
+  editorial: 'Editorial & Surreal',
+  narrative: 'Narrative Fantasy',
+  character: 'Character & Creature',
+  environment: 'Environment & Architecture',
+  sketchbook: 'Sketchbook'
+};
 projectGrid.innerHTML = projects.map((project) => {
   categoryCount[project.category] += 1;
-  const collection = project.category === 'selected' ? 'Selected Work' : 'Sketchbook';
+  const collection = genreLabels[project.genre] || 'Selected Work';
   const number = String(categoryCount[project.category]).padStart(2, '0');
   return `
-    <article class="project-card ${project.cardClass} ${project.category === 'sketchbook' ? 'sketch-card' : ''}" data-category="${project.category}">
+    <article class="project-card ${project.cardClass} ${project.category === 'sketchbook' ? 'sketch-card' : ''}" data-category="${project.category}" data-genre="${project.genre}">
       <a href="project.html?id=${project.id}">
         <figure><img src="${project.image}" alt="${project.alt}" loading="lazy" decoding="async"></figure>
         <div class="project-meta"><span>${project.title}</span><span>${collection} · ${number}</span></div>
@@ -38,7 +55,7 @@ filterButtons.forEach((button) => {
     const filter = button.dataset.filter;
     filterButtons.forEach((item) => item.classList.toggle('active', item === button));
     cards.forEach((card) => {
-      const visible = filter === 'all' || card.dataset.category === filter;
+      const visible = filter === 'all' || card.dataset.category === filter || card.dataset.genre === filter;
       card.classList.toggle('hidden', !visible);
     });
   });
