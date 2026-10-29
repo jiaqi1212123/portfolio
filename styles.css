@@ -156,7 +156,10 @@ button { font: inherit; }
 .contact h2 { max-width: 1150px; }
 .contact h2 em { color: var(--paper); }
 .contact-row { display: grid; grid-template-columns: 1.35fr .65fr; align-items: end; gap: 40px; margin-top: 90px; }
-.contact-row a { font-family: var(--serif); font-size: clamp(30px, 5vw, 72px); border-bottom: 1px solid currentColor; padding-bottom: 8px; display: flex; justify-content: space-between; }
+.contact-links { display: grid; gap: 16px; }
+.contact-links a { font-family: var(--serif); display: flex; justify-content: space-between; }
+.contact-links .email-link { font-size: clamp(30px, 5vw, 72px); border-bottom: 1px solid currentColor; padding-bottom: 8px; }
+.contact-links .phone-link { width: fit-content; gap: 22px; font-size: clamp(18px, 2vw, 30px); }
 .contact-row p { margin: 0; font-family: var(--serif); font-size: 16px; line-height: 1.35; }
 footer { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 22px 30px; background: var(--red); border-top: 1px solid rgba(23,23,20,.3); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
 footer span:nth-child(2) { text-align: center; }
