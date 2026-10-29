@@ -3,8 +3,11 @@ const orbitTrack = document.querySelector('#orbit-track');
 const projectGrid = document.querySelector('#project-grid');
 
 const selectedWorks = projects.filter((project) => project.category === 'selected');
+const homepageWorks = selectedWorks
+  .filter((project) => !['gate-of-fire', 'floating-temple'].includes(project.id))
+  .slice(0, 8);
 
-orbitTrack.innerHTML = selectedWorks.slice(0, 8).map((project, index) => `
+orbitTrack.innerHTML = homepageWorks.map((project, index) => `
   <a class="orbit-item p${index + 1}" href="project.html?id=${project.id}" aria-label="View ${project.title}">
     <span class="orbit-card ${project.cardClass}">
       <img src="${project.image}" alt="${project.alt}" decoding="async" ${index < 3 ? 'fetchpriority="high"' : ''}>

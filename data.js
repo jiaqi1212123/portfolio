@@ -1,5 +1,17 @@
 window.KELLY_PROJECTS = [
   {
+    id: 'human-organ-auction', title: 'Human Organ Auction', image: 'assets/portfolio/work-12.webp', category: 'selected', cardClass: 'tall',
+    alt: 'Surreal auction scene with a pair of lungs displayed beneath a price tag',
+    summary: 'A surreal editorial image turning the body into a luxury object inside a theatrical auction room.',
+    description: 'A pair of lungs hangs at the centre of an auction staged between clinical display and social spectacle. The sharp red, black and sky-blue contrast frames a reflection on <em>value, ownership and the human body</em>.'
+  },
+  {
+    id: 'untitled-room', title: 'Untitled', image: 'assets/portfolio/work-13.webp', category: 'selected', cardClass: 'tall',
+    alt: 'Armoured figure kneeling beside a reclining person in a lantern-lit room',
+    summary: 'A cinematic interior where an armoured figure keeps watch beside a reclining body at dusk.',
+    description: 'Warm lantern light holds two figures inside a quiet room while the painted screen behind them reveals a violent shadow narrative. The image balances <em>grief, memory and restrained tension</em>.'
+  },
+  {
     id: 'eyes-have-it', title: 'The Eyes Have It', image: 'assets/portfolio/work-01.webp', category: 'selected', cardClass: 'tall',
     alt: 'Surreal eye formed by many reaching hands inside a glowing arch',
     summary: 'A surreal image built around an all-seeing eye, layered hands and a theatrical checkerboard space.',
