@@ -77,27 +77,29 @@ button { font: inherit; }
 .orbit { width: min(78vw, 960px); aspect-ratio: 1.55 / 1; position: relative; margin-top: 48px; }
 .orbit::before { content: ""; position: absolute; inset: 9% 7%; border: 1px solid rgba(255,223,243,.13); border-radius: 50%; mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent); }
 .orbit-track { position: absolute; inset: 0; transform-origin: 50% 50%; animation: orbit-turn 72s linear infinite; }
-.orbit-item { position: absolute; width: 150px; aspect-ratio: 3 / 4; z-index: 2; transition: filter .45s, opacity .45s; transform-origin: center; animation: orbit-counter 72s linear infinite; }
-.orbit-item.wide { aspect-ratio: 1.42 / 1; }
-.orbit-item.medium { aspect-ratio: 1 / .86; }
+.orbit-item { position: absolute; width: 170px; aspect-ratio: 4 / 5.35; z-index: 2; transition: filter .45s, opacity .45s; transform-origin: center; animation: orbit-counter 72s linear infinite; }
 .orbit:hover .orbit-track, .orbit:hover .orbit-item, .orbit:focus-within .orbit-track, .orbit:focus-within .orbit-item { animation-play-state: paused; }
-.orbit-card { display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 9px; box-shadow: 0 18px 48px rgba(0,0,0,.68), 0 0 0 1px rgba(255,255,255,.1); transform: rotate(var(--card-rotation, 0deg)); transition: transform .45s, border-radius .45s, box-shadow .45s; background: #17151e; }
-.orbit-card img { transform: scale(1.015); transition: transform .55s; }
+.stack-cards { position: absolute; inset: 0 0 30px; }
+.stack-card { position: absolute; inset: 0; overflow: hidden; border-radius: 8px; background: #17151e; box-shadow: 0 18px 48px rgba(0,0,0,.68), 0 0 0 1px rgba(255,255,255,.12); transition: transform .5s cubic-bezier(.2,.7,.2,1), filter .45s, box-shadow .45s; }
+.stack-card:nth-child(1) { z-index: 3; transform: rotate(var(--card-rotation, -1deg)); }
+.stack-card:nth-child(2) { z-index: 2; transform: translate(11px, 5px) rotate(5deg); filter: brightness(.72) saturate(.78); }
+.stack-card:nth-child(3) { z-index: 1; transform: translate(-11px, 9px) rotate(-6deg); filter: brightness(.55) saturate(.7); }
+.stack-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s; }
+.stack-label { position: absolute; z-index: 5; left: 50%; bottom: -4px; display: flex; gap: 8px; align-items: baseline; transform: translateX(-50%); white-space: nowrap; padding: 5px 8px; border-radius: 999px; background: rgba(3,3,6,.68); box-shadow: 0 7px 22px rgba(0,0,0,.34); font-size: 10px; text-transform: uppercase; letter-spacing: .13em; color: rgba(255,238,247,.94); }
+.stack-label b { font-size: 7px; color: #f3a9d5; }
 .orbit-item:hover { z-index: 8; }
-.orbit-item:hover .orbit-card { transform: rotate(var(--card-rotation, 0deg)) scale(1.11); border-radius: 5px; box-shadow: 0 27px 64px rgba(0,0,0,.82), 0 0 30px rgba(235,154,215,.2); }
-.orbit-item:hover img { transform: scale(1); }
+.orbit-item:hover .stack-card:nth-child(1) { transform: rotate(var(--card-rotation, -1deg)) translateY(-5px) scale(1.07); box-shadow: 0 27px 64px rgba(0,0,0,.82), 0 0 30px rgba(235,154,215,.2); }
+.orbit-item:hover .stack-card:nth-child(2) { transform: translate(22px, 7px) rotate(9deg); }
+.orbit-item:hover .stack-card:nth-child(3) { transform: translate(-22px, 11px) rotate(-10deg); }
+.orbit-item:hover .stack-card:first-child img { transform: scale(1.025); }
 .orbit:hover .orbit-item:not(:hover), .orbit:focus-within .orbit-item:not(:focus-within) { filter: blur(5px) grayscale(.35); opacity: .27; }
-.orbit:hover .orbit-item:not(:hover) .orbit-card, .orbit:focus-within .orbit-item:not(:focus-within) .orbit-card { transform: rotate(var(--card-rotation, 0deg)) scale(.93); }
 .orbit:hover .identity, .orbit:focus-within .identity { opacity: .42; filter: blur(1px); }
-.p1 { left: 0; top: 27%; width: 170px; --card-rotation: -3deg; }
-.p2 { left: 14%; top: 2%; width: 150px; --card-rotation: 2deg; }
-.p3 { left: 39%; top: 0; width: 130px; --card-rotation: -2deg; }
-.p4 { right: 11%; top: 3%; width: 200px; --card-rotation: 3deg; }
-.p5 { right: 0; top: 31%; width: 150px; --card-rotation: -2deg; }
-.p6 { right: 10%; bottom: 3%; width: 160px; --card-rotation: 2deg; }
-.p7 { left: 55%; bottom: 0; width: 145px; --card-rotation: -3deg; }
-.p8 { left: 28%; bottom: 0; width: 155px; --card-rotation: 2deg; }
-.p9 { left: 0; bottom: 10%; width: 205px; --card-rotation: -2deg; }
+.p1 { left: 1%; top: 29%; width: 180px; --card-rotation: -2deg; }
+.p2 { left: 19%; top: 1%; width: 170px; --card-rotation: 2deg; }
+.p3 { right: 19%; top: 1%; width: 175px; --card-rotation: -1deg; }
+.p4 { right: 1%; top: 29%; width: 180px; --card-rotation: 2deg; }
+.p5 { right: 20%; bottom: 0; width: 185px; --card-rotation: -2deg; }
+.p6 { left: 20%; bottom: 0; width: 175px; --card-rotation: 1deg; }
 .identity { position: absolute; z-index: 5; left: 50%; top: 55%; width: 300px; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; text-align: center; transition: opacity .45s, filter .45s; }
 .portrait-placeholder { width: 106px; aspect-ratio: 1; border-radius: 50%; background: var(--red); display: grid; place-items: center; margin-bottom: 15px; overflow: hidden; color: #171714; }
 .portrait-placeholder b { font-family: var(--serif); font-size: 38px; font-weight: 400; font-style: italic; }
@@ -203,7 +205,23 @@ footer a { text-align: right; }
 }
 
 @media (max-width: 520px) {
-  .orbit { top: 215px; transform: scale(.56); }
+  .hero { min-height: 940px; }
+  .orbit { left: calc(50% - 195px); top: 245px; width: 390px; transform: none; }
+  .orbit::before { inset: 6% 4%; }
+  .orbit-item { width: 108px; }
+  .stack-cards { inset: 0 0 27px; }
+  .stack-label { bottom: -7px; gap: 5px; padding: 4px 6px; font-size: 8px; letter-spacing: .08em; }
+  .stack-label b { font-size: 6px; }
+  .p1 { left: 8%; top: 28%; width: 112px; }
+  .p2 { left: 14%; top: 0; width: 104px; }
+  .p3 { right: 14%; top: 0; width: 106px; }
+  .p4 { right: 8%; top: 28%; width: 112px; }
+  .p5 { right: 14%; bottom: -12%; width: 110px; }
+  .p6 { left: 14%; bottom: -12%; width: 106px; }
+  .p2 .stack-label, .p3 .stack-label { top: 7px; bottom: auto; }
+  .identity { top: 55%; width: 190px; }
+  .identity strong { font-size: 34px; }
+  .identity > span:last-child { width: 130px; margin-top: 9px; padding-top: 8px; font-size: 5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
