@@ -3,6 +3,38 @@ const orbitTrack = document.querySelector('#orbit-track');
 const projectGrid = document.querySelector('#project-grid');
 const filterHeadingMain = document.querySelector('#work-heading-main');
 const filterHeadingAccent = document.querySelector('#work-heading-accent');
+const signatureSource = document.querySelector('#signature-source');
+const signatureCanvas = document.querySelector('#signature-canvas');
+
+const renderSignature = () => {
+  if (!signatureSource || !signatureCanvas || !signatureSource.naturalWidth) return;
+  const context = signatureCanvas.getContext('2d', { willReadFrequently: true });
+  signatureCanvas.width = signatureSource.naturalWidth;
+  signatureCanvas.height = signatureSource.naturalHeight;
+  context.drawImage(signatureSource, 0, 0);
+
+  const imageData = context.getImageData(0, 0, signatureCanvas.width, signatureCanvas.height);
+  const pixels = imageData.data;
+  for (let index = 0; index < pixels.length; index += 4) {
+    const red = pixels[index];
+    const green = pixels[index + 1];
+    const blue = pixels[index + 2];
+    const isSignaturePink = red > 210
+      && green > 100
+      && green < 235
+      && blue > 110
+      && blue < 245
+      && red > green + 12
+      && red > blue + 5
+      && Math.abs(blue - green) < 70;
+    if (!isSignaturePink) pixels[index + 3] = 0;
+  }
+  context.putImageData(imageData, 0, 0);
+  signatureCanvas.closest('.signature-mark')?.classList.add('is-ready');
+};
+
+if (signatureSource?.complete) renderSignature();
+else signatureSource?.addEventListener('load', renderSignature, { once: true });
 
 const homepageCategories = [
   { filter: 'selected', label: 'Favourite work', ids: ['eyes-have-it', 'human-organ-auction', 'snow-dragon'] },
